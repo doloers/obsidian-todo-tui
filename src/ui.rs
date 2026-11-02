@@ -407,7 +407,14 @@ fn draw_footer(f: &mut Frame, app: &App, area: Rect) {
         }
         .to_string()
     } else {
-        "␣勾选    ⏎写入    u撤销    /过滤    ^G 全部按键".to_string()
+        let left = "␣ 勾选   │   ⏎ 写入   │   u 撤销   │   / 过滤";
+        let right = "^G 全部按键";
+        let gap = inner_w.saturating_sub(UnicodeWidthStr::width(left) + UnicodeWidthStr::width(right));
+        if gap >= 2 {
+            format!("{left}{}{right}", " ".repeat(gap))
+        } else {
+            fit(&format!("{left}   {right}"), inner_w)
+        }
     };
     let status = if app.screen == Screen::Input {
         Line::from(vec![
@@ -474,19 +481,19 @@ fn draw_modal_box(f: &mut Frame, app: &App, title: &str, lines: Vec<Line>, pct_w
 
 fn help_lines(pal: Palette) -> Vec<Line<'static>> {
     let rows: &[(&str, &str)] = &[
-        ("移动", "j/k ↑↓      g/G 首尾      ^D/^U 翻页"),
-        ("切栏", "h/l 或 Tab"),
-        ("勾选", "空格 当前项    a 本文件    A 全部"),
-        ("筛选", "/ 过滤        Esc 清除过滤"),
-        ("写入", "⏎ 写入        d 完成日期        u 撤销"),
-        ("库与外观", "r 重扫   v 换库   c 配色   o 打开"),
-        ("其它", "? 或 ^G 本帮助        q 退出"),
+        ("移动", "j / k ↑↓　上下      g / G　首尾      ^D / ^U　翻页"),
+        ("切栏", "h / l  或  Tab"),
+        ("勾选", "空格　当前项      a　本文件      A　全部"),
+        ("筛选", "/　过滤      Esc　清除过滤"),
+        ("写入", "⏎　写入      d　完成日期      u　撤销"),
+        ("库与外观", "r　重扫      v　换库      c　配色      o　打开"),
+        ("其它", "?  或  ^G　本帮助      q　退出"),
     ];
     let mut v: Vec<Line<'static>> = Vec::new();
     for (k, d) in rows {
         v.push(Line::from(vec![
             Span::styled(
-                format!("{k:<10}"),
+                format!("{k:<12}"),
                 Style::default().fg(pal.hi).add_modifier(Modifier::BOLD),
             ),
             Span::styled((*d).to_string(), Style::default().fg(pal.fg)),
