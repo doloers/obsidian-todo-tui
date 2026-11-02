@@ -1,0 +1,21 @@
+[package]
+name = "obsidian-todo-tui"
+version = "0.1.0"
+edition = "2021"
+description = "Obsidian 待办核对 TUI —— 勾选已完成的历史任务并写回 vault（带备份与撤销）"
+license = "MIT"
+repository = "https://github.com/doloers/obsidian-todo-tui"
+homepage = "https://github.com/doloers/obsidian-todo-tui"
+readme = "README.md"
+keywords = ["obsidian", "tui", "todo", "ratatui", "markdown"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+ratatui = "0.29"
+crossterm = "0.28"
+unicode-width = "0.2"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
