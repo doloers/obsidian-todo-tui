@@ -17,7 +17,8 @@ Obsidian 待办核对器（Rust + ratatui TUI）。把 vault 里**已经做完�
 ## 安装
 
 ```bash
-cd ~/AIworks/04-开源发布/obsidian-todo-tui
+git clone https://github.com/doloers/obsidian-todo-tui.git
+cd obsidian-todo-tui
 ./install.sh            # 编译 release，装到 ~/.local/bin，并写桌面入口（fuzzel 可搜「待办核对」）
 ```
 
